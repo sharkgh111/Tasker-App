@@ -10,10 +10,9 @@
 
         <link rel="shortcut icon" type="image/x-icon" href="{{ asset('favicon.ico') }}">
 
-        <!-- Scripts -->
         @routes
         @viteReactRefresh
-        @vite(['resources/js/app.jsx', "resources/js/Pages/{$page['component']}.jsx"])
+            @vite(['resources/js/app.jsx', "resources/js/Pages/{$page['component']}.jsx"])
         @inertiaHead
     </head>
     <body class="font-sans antialiased">
