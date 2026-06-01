@@ -1,9 +1,13 @@
 import React from 'react';
-import AppLayout from '@/Layouts/AppLayout';
+import AppLayout from '@/Components/Layouts/AppLayout';
+import { Head } from '@inertiajs/react';
 
 export default function Home() {
     return (
         <AppLayout>
+
+            <Head title="Головна" />
+
             <div className="rounded-md text-main_lightly flex flex-col flex-1 h-full w-full overflow-hidden">
                 
                 <div className="h-[70%] border-b-[3px] border-main_lightly p-8 gap-10 flex flex-col justify-center">

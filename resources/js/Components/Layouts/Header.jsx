@@ -1,26 +1,30 @@
 import React from 'react';
 import { Link, usePage } from '@inertiajs/react';
-import { House, Archive, CircleUser, CircleQuestionMark, User } from 'lucide-react';
+import { BsHouse } from "react-icons/bs";
+import { BsArchive } from "react-icons/bs";
+import { PiCheckSquareOffset } from "react-icons/pi";
+import { IoPersonOutline } from "react-icons/io5";
+import { GoQuestion } from "react-icons/go";
 
 export default function Header() {
     const { url } = usePage();
 
     const navItems = [
-        { id: 'home', Icon: House, href: '/home' },
-        { id: 'archive', Icon: Archive, href: '/archive' }, 
-        { id: 'cabinet', Icon: CircleUser, href: '/tasks' }, 
-        { id: 'help', Icon: CircleQuestionMark, href: '#' },
-        { id: 'user', Icon: User, href: '#' },
+        { id: 'home', Icon: BsHouse, href: '/home' },
+        { id: 'archive', Icon: BsArchive, href: '/archive' }, 
+        { id: 'cabinet', Icon: PiCheckSquareOffset, href: '/tasks' }, 
+        { id: 'help', Icon: GoQuestion, href: '#' },
+        { id: 'user', Icon: IoPersonOutline, href: '#' },
     ];
 
     return (
-        <header className="w-full flex justify-center h-[80px] border-[3px] border-main_lightly bg-main_green_primary rounded-md px-5 mb-4">
+        <header className="w-full flex-shrink-0 flex justify-center h-[80px] border-[3px] border-main_lightly bg-main_green_primary rounded-md px-5 mb-4">
             <nav className="group flex flex-1 justify-between items-center">
                 <Link href="/home">
                     <img src="images/tasker-2.png" alt="Tasker" className="w-40 cursor-pointer" />
                 </Link>
 
-                <section className="w-auto h-full gap-5 flex items-center justify-around">
+                <section className="w-auto h-full gap-6 flex items-center justify-around">
                     {navItems.map(({ id, Icon, href }) => {
                         const isActive = url === href;
 

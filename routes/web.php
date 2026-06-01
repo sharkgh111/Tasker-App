@@ -3,6 +3,8 @@
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use Illuminate\Http\Request;
+use App\Http\Controllers\TaskController;
+use App\Http\Controllers\SubtaskController;
 
 Route::redirect('/', '/home');
 
@@ -10,12 +12,13 @@ Route::get('/home', function () {
     return Inertia::render('HomePage');
 })->name('home');
 
-Route::get('/tasks', function (Request $request) {
-    if (!$request->header('X-Inertia')) {
-        return redirect('/home');
-    }
-    return Inertia::render('TasksPage');
-})->name('tasks');
+Route::get('/tasks', [TaskController::class, 'index'])->name('tasks');
+Route::post('/tasks', [TaskController::class, 'store'])->name('tasks.store');
+
+Route::delete('/tasks/{task}', [TaskController::class, 'destroy'])->name('tasks.destroy');
+Route::patch('/tasks/{task}', [TaskController::class, 'update'])->name('tasks.update');
+
+Route::patch('/subtasks/{subtask}', [SubtaskController::class, 'update']);
 
 Route::get('/archive', function (Request $request) {
     if (!$request->header('X-Inertia')) {
