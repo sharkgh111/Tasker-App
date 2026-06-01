@@ -4,7 +4,7 @@ import { getToggleOptions } from '@/Config/toggleOptions';
 
 import Radio from '@/Components/UI/RadioButton';
 
-export default function OtherOptions({setData, data}) {
+export default function OtherOptions({setData, data, errors}) {
     const currentToggleOptions = getToggleOptions(data);
 
     const handleCategoryClick = (categoryName) => {
@@ -33,6 +33,11 @@ export default function OtherOptions({setData, data}) {
                          />
                      ))}
                  </div>
+                 {errors.priority && (
+                    <span className="text-danger_light text-md font-montserrat-medium self-center">
+                        {errors.priority}
+                    </span>
+                )}
             </div>
             <div className="flex flex-col items-center justify-center w-full gap-2 border-b-2 pb-3 border-main_lightly/40">
                     <h2 className="font-montserrat-medium text-xl text-main_lightly">Теги</h2>

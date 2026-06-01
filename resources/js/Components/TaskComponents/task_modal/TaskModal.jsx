@@ -12,7 +12,7 @@ import { LuPlus, LuTrash2 } from "react-icons/lu";
 
 export default function TaskModal({ isOpen, onClose, task = null, afterLeave }) {
 
-    const { data, setData, post, patch, reset, errors, setError, clearErrors } = useForm({
+    const initialFormData = {
         title: '',
         description: '',
         task_date: '',
@@ -24,7 +24,19 @@ export default function TaskModal({ isOpen, onClose, task = null, afterLeave }) 
         can_archive: true,
         has_reminder: true,
         subtasks: []
-    });
+    };
+
+    const [isAddingSubtask, setIsAddingSubtask] = useState(false);
+    const [newSubtaskTitle, setNewSubtaskTitle] = useState('');
+
+    const { data, setData, post, patch, reset, errors, setError, clearErrors } = useForm(initialFormData);
+
+    const clearFormState = () => {
+        reset(initialFormData);
+        setNewSubtaskTitle('');
+        setIsAddingSubtask(false);
+        clearErrors();
+    };
 
     useEffect(() => {
         if (isOpen) {
@@ -43,19 +55,13 @@ export default function TaskModal({ isOpen, onClose, task = null, afterLeave }) 
                     subtasks: task.subtasks || []
                 });
             } else {
-                reset();
-                setNewSubtaskTitle('');
-                setIsAddingSubtask(false);
-                clearErrors();
+                clearFormState();
             }
         }
     }, [task, isOpen]);
 
     const isActionForbidden = task && (data.is_planned !== !!task.is_planned);
     const isTaskLocked = task && (data.is_planned !== !!task.is_planned);
-
-    const [isAddingSubtask, setIsAddingSubtask] = useState(false);
-    const [newSubtaskTitle, setNewSubtaskTitle] = useState('');
 
     const [isLoading, setIsLoading] = useState(false);
 
@@ -75,6 +81,8 @@ export default function TaskModal({ isOpen, onClose, task = null, afterLeave }) 
         if (!data.task_date) validationErrors.taskDate = "Відсутній термін виконання!";
 
         if (data.is_planned && !data.upload_date) validationErrors.uploadDate = "Відсутній час застосування!";
+
+        if (!data.priority) validationErrors.priority = "Не вибраний приорітет!";
 
         if (data.is_planned && data.task_date && data.upload_date) {
             if (new Date(data.task_date).getTime() < new Date(data.upload_date).getTime()) {
@@ -96,7 +104,7 @@ export default function TaskModal({ isOpen, onClose, task = null, afterLeave }) 
         } else {
                 post('/tasks', {
                     onSuccess: () => {
-                        reset(); 
+                        clearFormState();
                         onClose(); 
                     }
                 });
@@ -107,11 +115,7 @@ export default function TaskModal({ isOpen, onClose, task = null, afterLeave }) 
             e.preventDefault();
             setIsLoading(true);
                 
-            reset(); 
-
-            setNewSubtaskTitle('');
-            setIsAddingSubtask(false);
-            clearErrors();
+            clearFormState();
 
         setTimeout(() => {
             setIsLoading(false);
@@ -119,9 +123,9 @@ export default function TaskModal({ isOpen, onClose, task = null, afterLeave }) 
     };
 
     return (
-        <Transition show={isOpen} as={React.Fragment} afterLeave={() => {if (afterLeave) afterLeave(); reset();}}>
+        <Transition show={isOpen} as={React.Fragment} afterLeave={() => {if (afterLeave) afterLeave(); clearFormState();}}>
             <Dialog as="div" className="relative z-50" onClose={() => {
-                    reset(); 
+                    clearFormState();
                     onClose();
             }}>
                 <TransitionChild
@@ -145,7 +149,7 @@ export default function TaskModal({ isOpen, onClose, task = null, afterLeave }) 
                         leaveFrom="opacity-100 scale-100"
                         leaveTo="opacity-0 scale-95"
                         afterLeave={() => {
-                            reset(); 
+                            clearFormState(); 
                         }}
                     >
                         <DialogPanel 
@@ -184,6 +188,7 @@ export default function TaskModal({ isOpen, onClose, task = null, afterLeave }) 
                                     <OtherOptions
                                         data={data}
                                         setData={setData}
+                                        errors={errors}
                                     />
                                     
                                 </form>
@@ -200,7 +205,10 @@ export default function TaskModal({ isOpen, onClose, task = null, afterLeave }) 
                                             type="button" 
                                             text="Скасувати"
                                             className="border-2 bg-main_green_light hover:bg-main_green_light/70 font-montserrat-medium px-[50px] py-[5px] text-2xl"
-                                            onClick={onClose}
+                                            onClick={() => {
+                                                clearFormState();
+                                                onClose();
+                                            }}
                                         />
                                         <Button 
                                             type="submit"

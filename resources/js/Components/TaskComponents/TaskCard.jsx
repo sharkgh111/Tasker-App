@@ -245,7 +245,7 @@ export default function Task({ tasks, openModal, isPlanned = false }) {
                                             iconSize="w-6 h-6"
                                         />
                                     )}
-                                    {!isPlanned && task.can_archive && taskStatus.text !== 'Протерміновано' && (
+                                    {!isPlanned && task.can_archive && (
                                         <IconButton
                                             Icon={BsArchive}
                                             type="button"
