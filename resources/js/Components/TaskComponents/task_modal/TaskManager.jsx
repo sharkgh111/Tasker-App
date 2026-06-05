@@ -15,7 +15,7 @@ export default function TaskManager({ data, setData, errors, clearErrors, task }
     };
 
     return (
-        <section className="flex flex-col px-3 py-5 w-[calc(var(--overall-w)-2px)] h-full overflow-y-auto flex-shrink-0 border-r-[3px] border-main_lightly">
+        <section className="flex flex-col px-3 py-5 w-[calc(var(--overall-w)-2px)] h-full overflow-y-auto flex-shrink-0 border-r-[3px] border-main_lightly/30">
             <Toggle 
                 enabled={data.is_planned} 
                 disabled={!!task} 
@@ -28,7 +28,7 @@ export default function TaskManager({ data, setData, errors, clearErrors, task }
                 }}
             />
                 <div className="flex flex-col flex-1 items-start py-5 gap-[40px] justify-center">
-                    <div className="w-full flex items-center flex-col justify-start gap-2 border-b-2 pb-3 border-main_lightly/40">
+                    <div className="w-full flex items-center flex-col justify-start gap-2 border-b-4 pb-3 border-main_lightly/30">
                         <FieldInput 
                             Icon={MdOutlineDriveFileRenameOutline}
                             label="Назва завдання" 
@@ -43,7 +43,7 @@ export default function TaskManager({ data, setData, errors, clearErrors, task }
                                 </span>
                             )}
                     </div>
-                            <div className="w-full flex flex-col items-center justify-start gap-2 border-b-2 pb-3 border-main_lightly/40">
+                            <div className="w-full flex flex-col items-center justify-start gap-2 border-b-4 pb-3 border-main_lightly/30">
                                 <FieldInput 
                                     Icon={CiTextAlignLeft}
                                     type='textarea'                                                    
@@ -59,7 +59,7 @@ export default function TaskManager({ data, setData, errors, clearErrors, task }
                                         </span>
                                     )}
                             </div>
-                    <div className="w-full flex flex-col items-center justify-start gap-2 border-b-2 pb-3 border-main_lightly/40">
+                    <div className="w-full flex flex-col items-center justify-start gap-2 border-b-4 pb-3 border-main_lightly/30">
                             <FieldInput 
                                 label="Термін" 
                                 type="datetime-local"
@@ -75,7 +75,7 @@ export default function TaskManager({ data, setData, errors, clearErrors, task }
                                 )}
                     </div>
                             {data.is_planned && (
-                                <div className="w-full flex flex-col items-center justify-start gap-2 border-b-2 pb-3 border-main_lightly/40">
+                                <div className="w-full flex flex-col items-center justify-start gap-2 border-b-4 pb-3 border-main_lightly/30">
                                     <FieldInput 
                                         label="Застосувати в" 
                                         type="datetime-local"

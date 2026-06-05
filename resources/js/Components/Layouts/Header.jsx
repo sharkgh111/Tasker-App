@@ -1,5 +1,5 @@
-import React from 'react';
-import { Link, usePage } from '@inertiajs/react';
+import React, { useState } from 'react';
+import { Link, usePage, router } from '@inertiajs/react';
 import { BsHouse } from "react-icons/bs";
 import { BsArchive } from "react-icons/bs";
 import { PiCheckSquareOffset } from "react-icons/pi";
@@ -18,7 +18,7 @@ export default function Header() {
     ];
 
     return (
-        <header className="w-full flex-shrink-0 flex justify-center h-[80px] border-[3px] border-main_lightly bg-main_green_primary rounded-md px-5 mb-4">
+        <header className="w-full flex-shrink-0 flex justify-center h-[80px] shadow-xl bg-main_green_dark/10 backdrop-blur-xl rounded-md px-5 mb-4">
             <nav className="group flex flex-1 justify-between items-center">
                 <Link href="/home">
                     <img src="images/tasker-2.png" alt="Tasker" className="w-40 cursor-pointer" />
@@ -32,7 +32,7 @@ export default function Header() {
                             <Link 
                                 key={id}
                                 href={href} 
-                                className={`transition-all duration-300 ease-in-out hover:scale-110
+                                className={`transition-all pb-2 relative duration-300 ease-in-out hover:scale-110
                                     ${isActive 
                                         ? 'drop-shadow-[0_0_5px_rgba(255,255,255,0.8)]' 
                                         : 'shadow-none'

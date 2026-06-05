@@ -2,6 +2,7 @@ import React from 'react';
 import { LuPlus } from "react-icons/lu";
 import { FaCheck, FaPencil, FaRegTrashCan } from "react-icons/fa6";
 import { BsArchive } from "react-icons/bs";
+import { FaClockRotateLeft } from "react-icons/fa6";
 
 import { router } from '@inertiajs/react';
 import IconButton from '@/Components/UI/IconButton';
@@ -144,9 +145,9 @@ export default function Task({ tasks, openModal, isPlanned = false }) {
 
                     return (
                         
-                        <section key={task.id} className="flex flex-col items-center shadow-xl justify-between w-full bg-main_green_light border-2 border-main_lightly rounded-xl transition-all">
+                        <section key={task.id} className={`flex flex-col items-center shadow-xl justify-between w-full ${!isPlanned ? 'bg-main_green_dark/30' : 'bg-main_green_light/20' }  rounded-xl transition-all`}>
 
-                            <div className="flex w-full items-center justify-between border-b-2 border-main_lightly">
+                            <div className="flex w-full items-center justify-between border-b-2 border-main_lightly/30">
                                 <div className={`flex flex-1 ${isPlanned ? 'px-2' : 'px-4'} py-4 flex-row gap-4 items-center justify-between`}>
                                     <div className={`flex flex-1 ${isPlanned ? 'flex-row items-center' : 'flex-col items-start'} justify-between`}>
                                         <div className="flex flex-col items-start text-base justify-center">
@@ -232,7 +233,7 @@ export default function Task({ tasks, openModal, isPlanned = false }) {
                                         </p>
                                     )}
                                 </div>
-                                <div className="flex flex-grow items-center justify-center flex-1 h-full border-x-2 border-main_lightly">
+                                <div className="flex flex-grow items-center justify-center flex-1 h-full border-x-2 border-main_lightly/30">
                                     <SubTaskList isTaskActive={!isPlanned} subtasks={task.subtasks} taskStatus={taskStatus} />
                                 </div>
                                 <div className="px-2 py-3 flex gap-2 items-center justify-between flex-shrink-0">
@@ -245,10 +246,31 @@ export default function Task({ tasks, openModal, isPlanned = false }) {
                                             iconSize="w-6 h-6"
                                         />
                                     )}
+                                    <IconButton
+                                            Icon={FaClockRotateLeft}
+                                            type="button"
+                                            onClick={() => router.patch(`/tasks/${task.id}`, {
+                                                is_archived: true,
+                                                is_deferred: true
+                                            }, {
+                                                preserveScroll: true,
+                                                preserveState: true,
+                                                only: ['tasks']
+                                            })}
+                                            className='bg-main_green_primary border-2 border-main_lightly hover:bg-main_green_primary/80 hover:scale-95'
+                                            iconSize="w-6 h-6"
+                                        />
                                     {!isPlanned && task.can_archive && (
                                         <IconButton
                                             Icon={BsArchive}
                                             type="button"
+                                            onClick={() => router.patch(`/tasks/${task.id}`, {
+                                                is_archived: true
+                                            }, {
+                                                preserveScroll: true,
+                                                preserveState: true,
+                                                only: ['tasks']
+                                            })}
                                             className='bg-main_green_primary border-2 border-main_lightly hover:bg-main_green_primary/80 hover:scale-95'
                                             iconSize="w-6 h-6"
                                         />

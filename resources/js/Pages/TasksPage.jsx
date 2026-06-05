@@ -24,7 +24,7 @@ export default function TasksPage({tasks}) {
         <AppLayout>
             <Head title="Мій кабінет" />
 
-            <div className="text-main_lightly flex flex-col lg:flex-row h-[calc(100vh-220px)] min-h-0 gap-6 w-full justify-between items-stretch p-6 overflow-hidden">
+            <div className="text-main_lightly flex flex-col lg:flex-row flex-1 min-h-0 gap-6 w-full justify-between items-stretch p-6 overflow-hidden">
                 <TaskList
                    openModal={openModal}
                    tasks={tasks} 

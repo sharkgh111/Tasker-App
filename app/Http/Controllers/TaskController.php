@@ -12,12 +12,15 @@ class TaskController extends Controller {
     public function index() {
         $now = Carbon::now();
 
-        Task::where('is_planned', true)
+        Task::where('is_archived', false)
+            ->where('is_planned', true)
             ->whereNotNull('upload_date')
             ->where('upload_date', '<=', $now)
             ->update(['is_planned' => false]);
 
-        $tasks = Task::with('subtasks')->get();
+        $tasks = Task::with('subtasks')
+            ->where('is_archived', false)
+            ->get();
 
         $currentTasks = $tasks->filter(function ($task) use ($now) {
             if (!$task->is_planned) {
@@ -89,6 +92,8 @@ class TaskController extends Controller {
             'task_date' => 'sometimes|required|date',
             'is_planned' => 'sometimes|required|boolean',
             'is_completed' => 'sometimes|boolean',
+            'is_archived' => 'nullable|boolean',
+            'is_deferred' => 'nullable|boolean',
             'priority' => 'sometimes|required|string',
             'can_edit' => 'nullable|boolean',
             'can_archive' => 'nullable|boolean',

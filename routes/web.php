@@ -5,6 +5,7 @@ use Inertia\Inertia;
 use Illuminate\Http\Request;
 use App\Http\Controllers\TaskController;
 use App\Http\Controllers\SubtaskController;
+use App\Models\Task;
 
 Route::redirect('/', '/home');
 
@@ -24,5 +25,11 @@ Route::get('/archive', function (Request $request) {
     if (!$request->header('X-Inertia')) {
         return redirect('/home');
     }
-    return Inertia::render('ArchivePage');
+    $archiveTasks = Task::with('subtasks')
+        ->where('is_archived', true)
+        ->get();
+
+    return Inertia::render('ArchivePage', [
+        'archiveTasks' => $archiveTasks,
+    ]);
 })->name('archive');

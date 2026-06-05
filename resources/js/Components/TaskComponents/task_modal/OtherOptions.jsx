@@ -1,6 +1,8 @@
 import { TASK_CATEGORIES } from '@/Config/taskCategories';
 import { PRIORITY_OPTIONS } from '@/Config/priorityOptions';
 import { getToggleOptions } from '@/Config/toggleOptions';
+import { BsHash } from "react-icons/bs";
+import { TbFlagUp } from "react-icons/tb";
 
 import Radio from '@/Components/UI/RadioButton';
 
@@ -17,9 +19,12 @@ export default function OtherOptions({setData, data, errors}) {
     };
 
     return (
-        <section className="flex flex-col w-[calc(var(--overall-w)-2px)] h-full flex-shrink-0 p-3 border-l-[3px] border-main_lightly overflow-y-auto">
-            <div className="flex flex-col items-center mb-4 justify-center w-full gap-2 border-b-2 pb-3 border-main_lightly/40">
-                 <h2 className="font-montserrat-medium text-xl text-main_lightly">Пріорітет</h2>
+        <section className="flex flex-col w-[calc(var(--overall-w)-2px)] h-full flex-shrink-0 p-3 border-l-[3px] border-main_lightly/30 overflow-y-auto">
+            <div className="flex flex-col items-center mb-4 justify-center w-full gap-2 border-b-4 pb-3 border-main_lightly/30">
+                <span className='flex items-center justify-center gap-2'>
+                    <TbFlagUp className='w-6 h-6 text-main_lightly'/>
+                        <h2 className="font-montserrat-bold text-xl text-main_lightly">Пріорітет</h2>
+                </span>
                  <div className="flex items-center justify-center">
                      {PRIORITY_OPTIONS.map((option) => (
                          <Radio
@@ -39,8 +44,11 @@ export default function OtherOptions({setData, data, errors}) {
                     </span>
                 )}
             </div>
-            <div className="flex flex-col items-center justify-center w-full gap-2 border-b-2 pb-3 border-main_lightly/40">
-                    <h2 className="font-montserrat-medium text-xl text-main_lightly">Теги</h2>
+            <div className="flex flex-col items-center justify-center w-full gap-2 border-b-4 pb-3 border-main_lightly/30">
+                <span className='flex items-center justify-center'>
+                    <BsHash className='w-6 h-6 text-main_lightly'/>
+                        <h2 className="font-montserrat-bold text-xl text-main_lightly">Теги</h2>
+                </span>
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-x-6 gap-y-4 p-2 w-full">
                     {TASK_CATEGORIES.map((category, index) => {
                         const isLeftColumn = index % 2 === 0;
@@ -75,9 +83,9 @@ export default function OtherOptions({setData, data, errors}) {
                     const isActive = data[option.id]; 
 
                     return (
-                        <div key={option.id} className="flex items-center justify-between w-full gap-4 py-2 border-b-2 border-main_lightly/50">
+                        <div key={option.id} className="flex items-center justify-between w-full gap-4 py-1 border-b-4 border-main_lightly/30">
                             <div className="flex justify-center items-center gap-2 text-main_lightly">
-                                <IconComponent className="w-7 h-7 text-main_lightly" onClick={() => openModal(task)} />
+                                <IconComponent className="w-7 h-7 text-main_lightly" />
                                 <span className="font-montserrat-regular text-lg">{option.label}</span>
                             </div>
                             <div className="flex items-center gap-1 bg-main_green_dark/40 p-1 rounded-lg border border-main_lightly/10">

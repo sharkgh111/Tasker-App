@@ -25,14 +25,17 @@ export default {
                 'montserrat-regular': ['montserrat-regular', 'sans-serif'],
                 'montserrat-bold': ['montserrat-bold', 'sans-serif'],
             },
+            backgroundImage: {
+                'tasker-radial': 'radial-gradient(179.1% 154.97% at -22.55% 2.9%, #343667 0%, #888FB3 42.79%, var(--main_green_light, #8B97E2) 63.46%, #343667 100%);',
+            },
             colors: {
-                main_green_light: '#9FCB98', 
-                main_green_dark: '#346739', 
-                main_green_primary: '#79AE6F', 
+                main_green_light: '#8B97E2', 
+                main_green_dark: '#343667', 
+                main_green_primary: '#6F83AE', 
                 danger_light: '#C7424F', 
                 warning_light: '#e39f32',
-                main_lightly: '#FCFEEC',
-                succes_light: '#228B22' 
+                main_lightly: '#E5EFFF',
+                succes_light: '#87E747' 
             },
         },
     },

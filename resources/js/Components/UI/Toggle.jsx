@@ -1,11 +1,15 @@
 import React from 'react';
 import { Switch } from '@headlessui/react';
 
+import { TbTargetArrow } from "react-icons/tb";
+import { GoClock } from "react-icons/go";
+
 export default function Toggle({ enabled, setEnabled, classNameSwitch, classNameSlider }) {
     return (
-        <div className="flex items-center justify-center gap-4 select-none font-montserrat-medium text-xl border-b-2 pb-3 border-main_lightly/40 w-full">
-            <span className={`transition-colors duration-200 ${!enabled ? 'text-main_lightly' : 'text-main_lightly/40'}`}>
-                Поточна
+        <div className="flex items-center justify-center gap-4 select-none font-montserrat-medium text-xl border-b-4 pb-3 border-main_lightly/30 w-full">
+            <span className={`transition-colors flex itesm-center justify-center gap-1 duration-200 ${!enabled ? 'text-main_lightly' : 'text-main_lightly/40'}`}>
+                <TbTargetArrow className='w-6 h-6'/>
+                <p>Поточна</p>
             </span>
             
             <Switch
@@ -19,8 +23,9 @@ export default function Toggle({ enabled, setEnabled, classNameSwitch, className
                     }  will-change-transform backface-hidden absolute top-[2px] pointer-events-none inline-block transform-gpu rounded-full shadow-lg transition-all duration-300 ease-in-out ${classNameSlider}`}
                 />
             </Switch>
-            <span className={`transition-colors duration-200 ${enabled ? 'text-main_lightly' : 'text-main_lightly/40'}`}>
-                Запланована
+            <span className={`transition-colors flex itesm-center justify-center gap-2 duration-200 ${enabled ? 'text-main_lightly' : 'text-main_lightly/40'}`}>
+                <GoClock className='w-6 h-6'/>
+                <p>Запланована</p>
             </span>
         </div>
     );

@@ -7,6 +7,9 @@ import TaskManager from './TaskManager';
 import SubTaskManager from './SubTaskManager';
 import OtherOptions from './OtherOptions';
 import LoadingOverlay from '../../Overlays/LoadingOverlayModal';
+import { IoCreateOutline } from "react-icons/io5";
+import { TbCancel } from "react-icons/tb";
+import { MdOutlineCreate } from "react-icons/md";
 
 import { LuPlus, LuTrash2 } from "react-icons/lu";
 
@@ -31,7 +34,19 @@ export default function TaskModal({ isOpen, onClose, task = null, afterLeave }) 
 
     const { data, setData, post, patch, reset, errors, setError, clearErrors } = useForm(initialFormData);
 
+    const formatDatetimeLocal = (value) => {
+        if (!value) return '';
+
+        const normalized = String(value).replace(' ', 'T');
+        const date = new Date(normalized);
+        if (Number.isNaN(date.getTime())) return '';
+
+        const pad = (num) => String(num).padStart(2, '0');
+        return `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())}T${pad(date.getHours())}:${pad(date.getMinutes())}`;
+    };
+
     const clearFormState = () => {
+        setData({ ...initialFormData });
         reset(initialFormData);
         setNewSubtaskTitle('');
         setIsAddingSubtask(false);
@@ -39,24 +54,24 @@ export default function TaskModal({ isOpen, onClose, task = null, afterLeave }) 
     };
 
     useEffect(() => {
-        if (isOpen) {
-            if (task) {
-                setData({
-                    title: task.title || '',
-                    description: task.description || '',
-                    task_date: task.task_date ? task.task_date.substring(0, 16) : '', 
-                    is_planned: !!task.is_planned,
-                    upload_date: task.upload_date ? task.upload_date.substring(0, 16) : '',
-                    priority: task.priority || null,
-                    categories: task.categories || [],
-                    can_edit: task.can_edit ?? true,
-                    can_archive: !!task.can_archive,
-                    has_reminder: task.has_reminder ?? true,
-                    subtasks: task.subtasks || []
-                });
-            } else {
-                clearFormState();
-            }
+        if (!isOpen) return;
+
+        if (task) {
+            setData({
+                title: task.title || '',
+                description: task.description || '',
+                task_date: formatDatetimeLocal(task.task_date),
+                is_planned: !!task.is_planned,
+                upload_date: formatDatetimeLocal(task.upload_date),
+                priority: task.priority || null,
+                categories: task.categories || [],
+                can_edit: task.can_edit ?? true,
+                can_archive: !!task.can_archive,
+                has_reminder: task.has_reminder ?? true,
+                subtasks: task.subtasks || []
+            });
+        } else {
+            clearFormState();
         }
     }, [task, isOpen]);
 
@@ -78,7 +93,14 @@ export default function TaskModal({ isOpen, onClose, task = null, afterLeave }) 
 
         if (!data.description.trim()) validationErrors.description = "Опис не може бути пустим!";
 
-        if (!data.task_date) validationErrors.taskDate = "Відсутній термін виконання!";
+        if (!data.task_date) {
+            validationErrors.taskDate = "Відсутній термін виконання!";
+        } else {
+            const taskDateMs = new Date(data.task_date).getTime();
+            if (taskDateMs < Date.now()) {
+                validationErrors.taskDate = "Обраний термін виконання вже пройшов!";
+            }
+        }
 
         if (data.is_planned && !data.upload_date) validationErrors.uploadDate = "Відсутній час застосування!";
 
@@ -123,11 +145,8 @@ export default function TaskModal({ isOpen, onClose, task = null, afterLeave }) 
     };
 
     return (
-        <Transition show={isOpen} as={React.Fragment} afterLeave={() => {if (afterLeave) afterLeave(); clearFormState();}}>
-            <Dialog as="div" className="relative z-50" onClose={() => {
-                    clearFormState();
-                    onClose();
-            }}>
+        <Transition show={isOpen} as={React.Fragment} afterLeave={() => { if (afterLeave) afterLeave(); clearFormState(); }}>
+            <Dialog as="div" className="relative z-50" onClose={onClose}>
                 <TransitionChild
                     as={React.Fragment}
                     enter="ease-out duration-300"
@@ -137,7 +156,7 @@ export default function TaskModal({ isOpen, onClose, task = null, afterLeave }) 
                     leaveFrom="opacity-100"
                     leaveTo="opacity-0"
                 >
-                    <div className="fixed inset-0 bg-black/70 " />
+                    <div className="fixed inset-0 backdrop-blur-sm bg-black/40 " />
                 </TransitionChild>
                 <div className="fixed inset-0 overflow-y-auto flex items-center justify-center p-4">
                     <TransitionChild
@@ -148,25 +167,19 @@ export default function TaskModal({ isOpen, onClose, task = null, afterLeave }) 
                         leave="ease-in duration-200"
                         leaveFrom="opacity-100 scale-100"
                         leaveTo="opacity-0 scale-95"
-                        afterLeave={() => {
-                            clearFormState(); 
-                        }}
                     >
                         <DialogPanel 
                             style={{ '--overall-w': overallWidth }} 
-                            className="w-full relative max-w-7xl h-3/4 transform rounded-2xl rounded-tl-none bg-main_green_primary border-[3px] border-main_lightly text-left align-middle shadow-2xl transition-all"
+                            className="w-full relative max-w-7xl h-3/4 transform rounded-2xl bg-main_green_primary/30 backdrop-blur-lg border-[3px] border-main_lightly/30 text-left align-middle shadow-2xl transition-all"
                         >
                             <LoadingOverlay
                                 isLoading={isLoading}
                             />
-                            <DialogTitle as="h2" className="text-3xl flex items-center justify-center absolute h-[70px] w-[var(--overall-w)] -top-[70px] -left-[calc((var(--overall-w)/200))] rounded-t-xl border-[3px] border-main_lightly font-montserrat-regular leading-6 text-main_lightly bg-main_green_primary mb-4">
-                                {task ? 'Редагування завдання' : 'Створення завдання'}
-                            </DialogTitle>
-                            <div className="flex w-full h-full flex-col justify-between">
+                            <div className="flex w-full h-full flex-col gap-0 justify-between">
                                 <form 
                                     id="task-create-form" 
                                     onSubmit={handleSubmit} 
-                                    className="flex flex-row w-full h-[85%] items-stretch justify-between border-b-[3px] border-main_lightly"
+                                    className="flex flex-row w-full h-[85%] items-stretch justify-between border-b-[3px] border-main_lightly/30"
                                 >
                                     <TaskManager
                                         data={data}
@@ -197,22 +210,25 @@ export default function TaskModal({ isOpen, onClose, task = null, afterLeave }) 
                                     <Button
                                         type="button" 
                                         text="Очистити"
+                                        Icon={LuTrash2}
+                                        iconSize='w-6 h-6'
                                         className="border-2 bg-danger_light hover:bg-danger_light/80 font-montserrat-medium px-[50px] py-[5px] text-2xl"
                                         onClick={handleReset}
                                     />
                                     <div className="flex items-center justify-center gap-5">
                                         <Button
                                             type="button" 
+                                            Icon={TbCancel}
+                                            iconSize='w-7 h-7'
                                             text="Скасувати"
                                             className="border-2 bg-main_green_light hover:bg-main_green_light/70 font-montserrat-medium px-[50px] py-[5px] text-2xl"
-                                            onClick={() => {
-                                                clearFormState();
-                                                onClose();
-                                            }}
+                                            onClick={onClose}
                                         />
                                         <Button 
                                             type="submit"
                                             form="task-create-form"
+                                            Icon={MdOutlineCreate}
+                                            iconSize='w-7 h-7'
                                             onClick={handleSubmit} 
                                             disabled={isActionForbidden}
                                             text={task ? "Зберегти" : "Створити"}

@@ -20,6 +20,8 @@ class Task extends Model
         'categories',
         'can_edit',
         'can_archive',
+        'is_archived',
+        'is_deferred',
         'has_reminder',
         'is_completed'
     ];
@@ -31,6 +33,8 @@ class Task extends Model
         'is_planned' => 'boolean',
         'can_edit' => 'boolean',
         'can_archive' => 'boolean',
+        'is_archived' => 'boolean',
+        'is_deferred' => 'boolean',
         'has_reminder' => 'boolean',
         'is_completed' => 'boolean',
     ];

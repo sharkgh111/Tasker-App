@@ -6,7 +6,7 @@ export default function FieldInput({ label, type = 'text', placeholder, Icon, cl
     return (
         <div className={`flex flex-col gap-2 w-full ${type === 'textarea' ? 'h-full' : ''}`}>
             {label && (
-                <div className="flex items-center gap-2 text-2xl text-main_lightly font-montserrat-medium select-none">
+                <div className="flex items-center gap-2 text-2xl text-main_lightly font-montserrat-bold select-none">
 
                     {Icon && <Icon className="w-7 h-7 text-main_lightly" />}
                     <span>{label}</span>
