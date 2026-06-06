@@ -15,7 +15,7 @@ export default function TaskManager({ data, setData, errors, clearErrors, task }
     };
 
     return (
-        <section className="flex flex-col px-3 py-5 w-[calc(var(--overall-w)-2px)] h-full overflow-y-auto flex-shrink-0 border-r-[3px] border-main_lightly/30">
+        <section className="flex flex-col flex-1  min-w-0 min-h-0 px-3 py-5 w-[calc(var(--overall-w)-2px)] h-full overflow-y-auto flex-shrink-0 border-r-[3px] border-main_lightly/30">
             <Toggle 
                 enabled={data.is_planned} 
                 disabled={!!task} 

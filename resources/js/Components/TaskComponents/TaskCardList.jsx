@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 
 import { PiSmileySad } from "react-icons/pi";
 import { LuPlus, LuChevronRight, LuChevronLeft } from "react-icons/lu";
+import { TbTargetArrow } from "react-icons/tb";
+import { GoClock } from "react-icons/go";
 
 import Task from '@/Components/TaskComponents/TaskCard';
 import Button from '@/Components/UI/Button';
@@ -102,7 +104,8 @@ export default function TaskList({ tasks = [], openModal }) {
             <section className={`w-full ${openPlanned ? 'lg:w-[30%]' : 'lg:w-20'} shadow-xl relative p-5 gap-5 h-full flex flex-col items-center bg-main_green_dark/10 rounded-lg min-h-0 transition-all duration-300`}>
                     <div className={`border-b-4 border-main_lightly/20 w-full ${openPlanned ? 'px-10 py-2' : 'p-0 border-none'} transition-all duration-300`}>
                         {openPlanned && (
-                            <div className="flex flex-col items-center transition-all duration-100">
+                            <div className="flex items-center justify-center gap-3 transition-all duration-100">
+                                <GoClock className='text-main_lightly w-7 h-7'/>
                                 <h2 className={`text-2xl text-main_lightly font-montserrat-medium ${openPlanned ? 'opacity-100' : 'opacity-0'}`}>Заплановані завдання</h2>
                             </div>
                         )}
@@ -153,7 +156,8 @@ export default function TaskList({ tasks = [], openModal }) {
                 </section>
 
                 <section className="w-full flex-1 p-5 gap-5 h-full flex flex-col items-center rounded-lg min-h-0">
-                    <div className="px-10 w-full text-center py-2 flex-shrink-0 border-b-4 border-main_lightly/20">
+                    <div className="px-10 w-full flex items-center justify-center gap-2 py-2 flex-shrink-0 border-b-4 border-main_lightly/20">
+                        <TbTargetArrow className='text-main_lightly w-7 h-7'/>
                         <h2 className="text-2xl text-main_lightly font-montserrat-medium">Поточні завдання</h2>
                     </div>
                     

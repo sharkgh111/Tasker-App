@@ -34,7 +34,7 @@ export default function SubTaskManager({
     };
     
     return (
-        <section className={`flex flex-col flex-1 h-full p-6 gap-4 overflow-y-auto transition-all duration-300 ${
+        <section className={`flex flex-col flex-1 h-full w-full p-6 gap-4 overflow-y-auto transition-all duration-300 ${
             subtasks.length === 0 && !isAddingSubtask ? 'justify-center items-center' : 'justify-start'
         }`}>
             {(subtasks.length > 0) && (
@@ -120,7 +120,7 @@ export default function SubTaskManager({
                     Icon={LuPlus}
                     onClick={() => { setIsAddingSubtask(true); setNewSubtaskTitle(''); }}
                     iconSize="w-5 h-5"
-                    className="self-center text-main_lightily border-2 border-dashed border-main_lightily font-montserrat-medium py-1 px-5 text-sm rounded-lg shadow-sm hover:bg-main_green_light"
+                    className="self-center text-main_lightily border-2 border-dashed border-main_lightily font-montserrat-medium py-1 px-5 text-sm rounded-lg shadow-sm hover:bg-main_green_dark/40"
                 />
             )}
 

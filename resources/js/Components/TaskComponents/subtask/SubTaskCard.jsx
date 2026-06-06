@@ -13,7 +13,7 @@ export default function SubTaskCard({ subtask, isTaskActive, taskStatus }) {
     };
 
     return (
-        <div className="w-full [counter-increment:subtask-counter] flex flex-1 items-center justify-between rounded-lg px-2 py-3 bg-main_green_primary/40">
+        <div className="w-full [counter-increment:subtask-counter] flex flex-1 items-center justify-between rounded-lg px-2 py-3 bg-main_green_dark/20">
             <span className="text-main_lightly font-montserrat-bold before:content-[counter(subtask-counter)]"></span>
                 <span className={`font-montserrat-bold text-lg ${taskStatus.text === 'Протерміновано' ? ' text-main_lightly/50' : 'text-main_lightly'} ${subtask.is_completed ? 'line-through text-main_lightly/50' : 'text-main_lightly'}`}>
                     {subtask.title}

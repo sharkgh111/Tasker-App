@@ -170,16 +170,16 @@ export default function TaskModal({ isOpen, onClose, task = null, afterLeave }) 
                     >
                         <DialogPanel 
                             style={{ '--overall-w': overallWidth }} 
-                            className="w-full relative max-w-7xl h-3/4 transform rounded-2xl bg-main_green_primary/30 backdrop-blur-lg border-[3px] border-main_lightly/30 text-left align-middle shadow-2xl transition-all"
+                            className="w-full max-w-7xl h-[75vh] flex flex-col transform rounded-2xl bg-main_green_primary/30 backdrop-blur-lg border-[3px] border-main_lightly/30 text-left shadow-2xl transition-all"
                         >
                             <LoadingOverlay
                                 isLoading={isLoading}
                             />
-                            <div className="flex w-full h-full flex-col gap-0 justify-between">
+                            <div className="flex flex-col flex-grow min-h-0">
                                 <form 
                                     id="task-create-form" 
                                     onSubmit={handleSubmit} 
-                                    className="flex flex-row w-full h-[85%] items-stretch justify-between border-b-[3px] border-main_lightly/30"
+                                    className="flex flex-row flex-grow min-h-0 border-b-[3px] border-main_lightly/30"
                                 >
                                     <TaskManager
                                         data={data}
@@ -206,7 +206,8 @@ export default function TaskModal({ isOpen, onClose, task = null, afterLeave }) 
                                     
                                 </form>
 
-                                <footer className="flex h-auto p-5 items-center justify-between">
+                                <footer className="flex-shrink-0 p-5 mt-auto border-t border-main_lightly/30">
+                                    <div className="flex justify-between items-center">
                                     <Button
                                         type="button" 
                                         text="Очистити"
@@ -215,25 +216,26 @@ export default function TaskModal({ isOpen, onClose, task = null, afterLeave }) 
                                         className="border-2 bg-danger_light hover:bg-danger_light/80 font-montserrat-medium px-[50px] py-[5px] text-2xl"
                                         onClick={handleReset}
                                     />
-                                    <div className="flex items-center justify-center gap-5">
-                                        <Button
-                                            type="button" 
-                                            Icon={TbCancel}
-                                            iconSize='w-7 h-7'
-                                            text="Скасувати"
-                                            className="border-2 bg-main_green_light hover:bg-main_green_light/70 font-montserrat-medium px-[50px] py-[5px] text-2xl"
-                                            onClick={onClose}
-                                        />
-                                        <Button 
-                                            type="submit"
-                                            form="task-create-form"
-                                            Icon={MdOutlineCreate}
-                                            iconSize='w-7 h-7'
-                                            onClick={handleSubmit} 
-                                            disabled={isActionForbidden}
-                                            text={task ? "Зберегти" : "Створити"}
-                                            className={`${isTaskLocked ? 'bg-gray-500 cursor-not-allowed' : 'bg-main_green_dark'} border-2 bg-main_green_dark hover:bg-main_green_dark/80 font-montserrat-medium px-[50px] py-[5px] text-2xl`}
-                                        />
+                                        <div className="flex items-center justify-center gap-5">
+                                            <Button
+                                                type="button" 
+                                                Icon={TbCancel}
+                                                iconSize='w-7 h-7'
+                                                text="Скасувати"
+                                                className="border-2 bg-main_green_primary hover:bg-main_green_primary/70 font-montserrat-medium px-[50px] py-[5px] text-2xl"
+                                                onClick={onClose}
+                                            />
+                                            <Button 
+                                                type="submit"
+                                                form="task-create-form"
+                                                Icon={MdOutlineCreate}
+                                                iconSize='w-7 h-7'
+                                                onClick={handleSubmit} 
+                                                disabled={isActionForbidden}
+                                                text={task ? "Зберегти" : "Створити"}
+                                                className={`${isTaskLocked ? 'bg-gray-500 cursor-not-allowed' : 'bg-main_green_dark'} border-2 bg-main_green_dark hover:bg-main_green_dark/80 font-montserrat-medium px-[50px] py-[5px] text-2xl`}
+                                            />
+                                        </div>
                                     </div>
                                 </footer>
                             </div>

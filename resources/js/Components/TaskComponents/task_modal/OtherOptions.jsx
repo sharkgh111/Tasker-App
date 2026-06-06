@@ -19,7 +19,7 @@ export default function OtherOptions({setData, data, errors}) {
     };
 
     return (
-        <section className="flex flex-col w-[calc(var(--overall-w)-2px)] h-full flex-shrink-0 p-3 border-l-[3px] border-main_lightly/30 overflow-y-auto">
+        <section className="flex flex-col flex-1 min-w-0 min-h-0 w-[calc(var(--overall-w)-2px)] h-full flex-shrink-0 p-3 border-l-[3px] border-main_lightly/30 overflow-y-auto">
             <div className="flex flex-col items-center mb-4 justify-center w-full gap-2 border-b-4 pb-3 border-main_lightly/30">
                 <span className='flex items-center justify-center gap-2'>
                     <TbFlagUp className='w-6 h-6 text-main_lightly'/>
