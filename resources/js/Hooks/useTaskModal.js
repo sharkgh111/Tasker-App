@@ -1,27 +1,27 @@
-import { useState } from 'react';
+import { useState } from "react";
 
 export function useTaskModal() {
-    const [isOpen, setIsOpen] = useState(false);
-    const [editingTask, setEditingTask] = useState(null);
+   const [isOpen, setIsOpen] = useState(false);
+   const [editingTask, setEditingTask] = useState(null);
 
-    const open = (task = null) => {
-        setEditingTask(task);
-        setIsOpen(true);
-    };
+   const open = (task = null) => {
+      setEditingTask(task);
+      setIsOpen(true);
+   };
 
-    const close = () => {
-        setIsOpen(false);
-    };
+   const close = () => {
+      setIsOpen(false);
+   };
 
-    const reset = () => {
-        setEditingTask(null);
-    };
+   const reset = () => {
+      setEditingTask(null);
+   };
 
-    return {
-        isOpen,
-        editingTask,
-        open,
-        close,
-        reset
-    };
+   return {
+      isOpen,
+      editingTask,
+      open,
+      close,
+      reset,
+   };
 }

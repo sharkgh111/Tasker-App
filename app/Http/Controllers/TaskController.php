@@ -11,6 +11,18 @@ class TaskController extends Controller {
     
     public function index() {
         $now = Carbon::now();
+        $overdueRemovalThreshold = $now->copy()->subDays(7);
+        $completedRemovalThreshold = $now->copy()->subDays(14);
+
+        Task::where('is_archived', false)
+            ->where('is_completed', false)
+            ->where('task_date', '<', $overdueRemovalThreshold)
+            ->delete();
+
+        Task::where('is_archived', false)
+            ->where('is_completed', true)
+            ->where('updated_at', '<', $completedRemovalThreshold)
+            ->delete();
 
         Task::where('is_archived', false)
             ->where('is_planned', true)
@@ -43,6 +55,39 @@ class TaskController extends Controller {
 
     public function store(Request $request) {
         $isPlanned = filter_var($request->input('is_planned'), FILTER_VALIDATE_BOOLEAN);
+        $now = Carbon::now();
+
+        $plannedLimit = 5;
+        $currentLimit = 7;
+
+        $plannedTasksCount = Task::query()
+            ->where('is_archived', false)
+            ->where('is_completed', false)
+            ->where('is_planned', true)
+            ->whereNotNull('upload_date')
+            ->where('upload_date', '>', $now)
+            ->count();
+
+        $currentTasksCount = Task::query()
+            ->where('is_archived', false)
+            ->where('is_completed', false)
+            ->where(function ($query) use ($now) {
+                $query->where('is_planned', false)
+                    ->orWhere(function ($plannedQuery) use ($now) {
+                        $plannedQuery->where('is_planned', true)
+                            ->whereNotNull('upload_date')
+                            ->where('upload_date', '<=', $now);
+                    });
+            })
+            ->count();
+
+        if ($isPlanned && $plannedTasksCount >= $plannedLimit) {
+            return redirect()->back()->withErrors(['limit' => 'Досягнуто ліміту запланованих задач (макс. 5).']);
+        }
+
+        if (!$isPlanned && $currentTasksCount >= $currentLimit) {
+            return redirect()->back()->withErrors(['limit' => 'Досягнуто ліміту поточних задач (макс. 7).']);
+        }
 
         $rules = [
             'title' => 'required|string|max:255',
@@ -120,6 +165,13 @@ class TaskController extends Controller {
                 ]);
             }
         }
+
+        return redirect()->back();
+    }
+
+    public function destroyAll()
+    {
+        Task::query()->delete();
 
         return redirect()->back();
     }

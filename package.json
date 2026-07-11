@@ -1,27 +1,36 @@
 {
-    "$schema": "https://www.schemastore.org/package.json",
-    "private": true,
-    "type": "module",
-    "scripts": {
-        "build": "vite build",
-        "dev": "concurrently \"php artisan serve\" \"vite\""
-    },
-    "devDependencies": {
-        "@headlessui/react": "^2.0.0",
-        "@inertiajs/react": "^2.0.0",
-        "@tailwindcss/forms": "^0.5.3",
-        "@vitejs/plugin-react": "^6.0.2",
-        "autoprefixer": "^10.5.0",
-        "concurrently": "^9.2.1",
-        "laravel-vite-plugin": "^3.1",
-        "postcss": "^8.5.15",
-        "react": "^18.2.0",
-        "react-dom": "^18.2.0",
-        "tailwindcss": "^3.4.19",
-        "vite": "^8.0.0"
-    },
-    "dependencies": {
-        "lucide-react": "^1.16.0",
-        "react-icons": "^5.6.0"
-    }
+   "$schema": "https://www.schemastore.org/package.json",
+   "private": true,
+   "type": "module",
+   "scripts": {
+      "build": "vite build",
+      "dev": "concurrently \"php artisan serve\" \"vite\"",
+      "format": "prettier --write .",
+      "format:check": "prettier --check ."
+   },
+   "dependencies": {
+      "@headlessui/react": "^2.2.10",
+      "@inertiajs/react": "^2.0.0",
+      "lucide-react": "^1.16.0",
+      "react": "^18.2.0",
+      "react-dom": "^18.2.0",
+      "react-icons": "^5.6.0"
+   },
+   "devDependencies": {
+      "@eslint/js": "^10.0.1",
+      "@tailwindcss/forms": "^0.5.3",
+      "@vitejs/plugin-react": "^6.0.2",
+      "autoprefixer": "^10.5.0",
+      "concurrently": "^9.2.1",
+      "eslint": "^10.7.0",
+      "eslint-config-prettier": "^10.1.8",
+      "eslint-plugin-prettier": "^5.5.6",
+      "eslint-plugin-react": "^7.37.5",
+      "globals": "^17.7.0",
+      "laravel-vite-plugin": "^3.1",
+      "postcss": "^8.5.15",
+      "prettier": "^3.9.5",
+      "tailwindcss": "^3.4.19",
+      "vite": "^8.0.0"
+   }
 }

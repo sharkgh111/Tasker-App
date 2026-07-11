@@ -15,6 +15,7 @@ Route::get('/home', function () {
 
 Route::get('/tasks', [TaskController::class, 'index'])->name('tasks');
 Route::post('/tasks', [TaskController::class, 'store'])->name('tasks.store');
+Route::delete('/tasks', [TaskController::class, 'destroyAll'])->name('tasks.destroyAll');
 
 Route::delete('/tasks/{task}', [TaskController::class, 'destroy'])->name('tasks.destroy');
 Route::patch('/tasks/{task}', [TaskController::class, 'update'])->name('tasks.update');
