@@ -13,6 +13,8 @@ Route::get('/home', function () {
     return Inertia::render('HomePage');
 })->name('home');
 
+Route::get('/deferred', [TaskController::class, 'deferred'])->name('deferred');
+
 Route::get('/tasks', [TaskController::class, 'index'])->name('tasks');
 Route::post('/tasks', [TaskController::class, 'store'])->name('tasks.store');
 Route::delete('/tasks', [TaskController::class, 'destroyAll'])->name('tasks.destroyAll');
@@ -30,7 +32,7 @@ Route::get('/archive', function (Request $request) {
         ->where('is_archived', true)
         ->get();
 
-    return Inertia::render('ArchivePage', [
+    return Inertia::render('ArchivedTasksPage', [
         'archiveTasks' => $archiveTasks,
     ]);
 })->name('archive');

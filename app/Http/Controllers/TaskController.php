@@ -11,13 +11,14 @@ class TaskController extends Controller {
     
     public function index() {
         $now = Carbon::now();
-        $overdueRemovalThreshold = $now->copy()->subDays(7);
+        $overdueArchiveThreshold = $now->copy()->subDays(7);
         $completedRemovalThreshold = $now->copy()->subDays(14);
 
         Task::where('is_archived', false)
             ->where('is_completed', false)
-            ->where('task_date', '<', $overdueRemovalThreshold)
-            ->delete();
+            ->where('is_deferred', false)
+            ->where('task_date', '<', $overdueArchiveThreshold)
+            ->update(['is_archived' => true]);
 
         Task::where('is_archived', false)
             ->where('is_completed', true)
@@ -32,6 +33,7 @@ class TaskController extends Controller {
 
         $tasks = Task::with('subtasks')
             ->where('is_archived', false)
+            ->where('is_deferred', false)
             ->get();
 
         $currentTasks = $tasks->filter(function ($task) use ($now) {
@@ -50,6 +52,25 @@ class TaskController extends Controller {
 
         return Inertia::render('TasksPage', [
             'tasks' => $tasks
+        ]);
+    }
+
+    public function deferred() {
+        $now = Carbon::now();
+
+        Task::where('is_archived', false)
+            ->where('is_completed', false)
+            ->where('is_deferred', true)
+            ->where('task_date', '<', $now)
+            ->update(['is_archived' => true]);
+
+        $deferredTasks = Task::with('subtasks')
+            ->where('is_deferred', true)
+            ->where('is_archived', false)
+            ->get();
+
+        return Inertia::render('DeferredTasksPage', [
+            'deferredTasks' => $deferredTasks,
         ]);
     }
 
@@ -171,7 +192,9 @@ class TaskController extends Controller {
 
     public function destroyAll()
     {
-        Task::query()->delete();
+        Task::query()->update([
+            'is_archived' => true,
+        ]);
 
         return redirect()->back();
     }

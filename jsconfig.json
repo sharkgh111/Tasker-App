@@ -1,0 +1,7 @@
+{
+     "compilerOptions": {
+          "checkJs": false,
+          "jsx": "react"
+     },
+     "exclude": ["node_modules", "vendor", "dist", "build"]
+}

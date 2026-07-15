@@ -6,13 +6,13 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 
 uses(RefreshDatabase::class);
 
-test('expired tasks older than 7 days are removed from the task list', function () {
+test('expired tasks older than 14 days are archived and removed from the task list', function () {
     $user = User::factory()->create();
 
     $expiredTask = Task::create([
         'title' => 'Просрочена задача',
         'description' => 'Тест',
-        'task_date' => now()->subDays(8),
+        'task_date' => now()->subDays(15),
         'is_planned' => false,
         'upload_date' => null,
         'priority' => 'medium',
@@ -44,8 +44,58 @@ test('expired tasks older than 7 days are removed from the task list', function 
     $response = $this->actingAs($user)->get('/tasks');
 
     $response->assertOk();
-    $this->assertDatabaseMissing('tasks', ['id' => $expiredTask->id]);
-    $this->assertDatabaseHas('tasks', ['id' => $activeTask->id]);
+    $this->assertDatabaseHas('tasks', ['id' => $expiredTask->id, 'is_archived' => true]);
+    $this->assertDatabaseHas('tasks', ['id' => $activeTask->id, 'is_archived' => false]);
+});
+
+test('expired tasks older than 7 days are archived and removed from the task list', function () {
+    $user = User::factory()->create();
+
+    $expiredTask = Task::create([
+        'title' => 'Просрочена на тиждень задача',
+        'description' => 'Тест',
+        'task_date' => now()->subDays(8),
+        'is_planned' => false,
+        'upload_date' => null,
+        'priority' => 'medium',
+        'categories' => [],
+        'can_edit' => true,
+        'can_archive' => true,
+        'is_archived' => false,
+        'is_deferred' => false,
+        'has_reminder' => true,
+        'is_completed' => false,
+    ]);
+
+    $response = $this->actingAs($user)->get('/tasks');
+
+    $response->assertOk();
+    $this->assertDatabaseHas('tasks', ['id' => $expiredTask->id, 'is_archived' => true]);
+});
+
+test('clearing all tasks archives them instead of deleting them', function () {
+    $user = User::factory()->create();
+
+    $task = Task::create([
+        'title' => 'Задача для архіву',
+        'description' => 'Тест',
+        'task_date' => now()->addDay(),
+        'is_planned' => false,
+        'upload_date' => null,
+        'priority' => 'medium',
+        'categories' => [],
+        'can_edit' => true,
+        'can_archive' => true,
+        'is_archived' => false,
+        'is_deferred' => false,
+        'has_reminder' => true,
+        'is_completed' => false,
+    ]);
+
+    $response = $this->actingAs($user)->delete('/tasks');
+
+    $response->assertRedirect();
+    $this->assertDatabaseHas('tasks', ['id' => $task->id, 'is_archived' => true]);
 });
 
 test('completed tasks older than 14 days are removed from the task list', function () {
@@ -184,4 +234,29 @@ test('it prevents creating more than 7 current tasks while ignoring planned futu
 
     $response->assertSessionHasErrors('limit');
     $response->assertSessionHasErrors(['limit' => 'Досягнуто ліміту поточних задач (макс. 7).']);
+});
+
+test('deferred overdue tasks are archived when opening the deferred page', function () {
+    $user = User::factory()->create();
+
+    $task = Task::create([
+        'title' => 'Відкладена просрочена задача',
+        'description' => 'Тест',
+        'task_date' => now()->subHour(),
+        'is_planned' => false,
+        'upload_date' => null,
+        'priority' => 'medium',
+        'categories' => [],
+        'can_edit' => true,
+        'can_archive' => true,
+        'is_archived' => false,
+        'is_deferred' => true,
+        'has_reminder' => true,
+        'is_completed' => false,
+    ]);
+
+    $response = $this->actingAs($user)->get('/deferred');
+
+    $response->assertOk();
+    $this->assertDatabaseHas('tasks', ['id' => $task->id, 'is_archived' => true]);
 });

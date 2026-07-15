@@ -3,21 +3,21 @@
 @tailwind utilities;
 
 @font-face {
-   font-family: "montserrat-light";
-   src: url("./fonts/Montserrat-Light.woff2") format("woff2");
+     font-family: "montserrat-light";
+     src: url("./fonts/Montserrat-Light.woff2") format("woff2");
 }
 
 @font-face {
-   font-family: "montserrat-regular";
-   src: url("./fonts/Montserrat-Regular.woff2") format("woff2");
+     font-family: "montserrat-regular";
+     src: url("./fonts/Montserrat-Regular.woff2") format("woff2");
 }
 
 @font-face {
-   font-family: "montserrat-medium";
-   src: url("./fonts/Montserrat-Medium.woff2") format("woff2");
+     font-family: "montserrat-medium";
+     src: url("./fonts/Montserrat-Medium.woff2") format("woff2");
 }
 
 @font-face {
-   font-family: "montserrat-bold";
-   src: url("./fonts/Montserrat-Bold.woff2") format("woff2");
+     font-family: "montserrat-bold";
+     src: url("./fonts/Montserrat-Bold.woff2") format("woff2");
 }

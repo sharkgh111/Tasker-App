@@ -1,51 +1,43 @@
 import React, { useState } from "react";
 import { Head } from "@inertiajs/react";
 
-import AppLayout from "@/Components/Layouts/AppLayout";
+import AppLayout from "@/layouts/AppLayout";
 
-import TaskModal from "@/Components/TaskComponents/task_modal/TaskModal";
-import TaskList from "@/Components/TaskComponents/task/TaskList";
-import { useTaskModal } from "@/Hooks/useTaskModal";
+import TaskModal from "@/components/TasksPageComponents/task/task_modal/TaskModal";
+import TaskList from "@/components/TasksPageComponents/task/TaskList";
+import { useTaskModal } from "@/components/TasksPageComponents/task/task_modal/useTaskModal";
 
 export default function TasksPage({ tasks }) {
-   const { isOpen: isModalOpen, editingTask, open, close, reset } = useTaskModal();
+     const { isOpen: isModalOpen, editingTask, open, close, reset } = useTaskModal();
 
-   const [activeFilters, setActiveFilters] = useState(["all"]);
+     const [activeFilters, setActiveFilters] = useState(["all"]);
 
-   const handleApplyFilters = (newFiltersArray) => {
-      const normalizedFilters = Array.isArray(newFiltersArray) && newFiltersArray.length > 0 ? newFiltersArray : ["all"];
+     const handleApplyFilters = (newFiltersArray) => {
+          const normalizedFilters = Array.isArray(newFiltersArray) && newFiltersArray.length > 0 ? newFiltersArray : ["all"];
 
-      setActiveFilters(normalizedFilters);
-   };
+          setActiveFilters(normalizedFilters);
+     };
 
-   const handleClearFilters = () => {
-      setActiveFilters(["all"]);
-   };
+     const handleClearFilters = () => {
+          setActiveFilters(["all"]);
+     };
 
-   const openModal = (task = null) => {
-      open(task);
-   };
+     const openModal = (task = null) => {
+          open(task);
+     };
 
-   const closeModal = () => {
-      close();
-      reset();
-   };
+     const closeModal = () => {
+          close();
+          reset();
+     };
 
-   return (
-      <AppLayout>
-         <Head title="Мій кабінет" />
+     return (
+          <AppLayout>
+               <Head title="Мій кабінет" />
 
-         <div className="text-main_lightly flex flex-col lg:flex-row flex-1 min-h-0 gap-6 w-full justify-between items-stretch p-6 overflow-hidden">
-            <TaskList
-               openModal={openModal}
-               tasks={tasks}
-               activeFilters={activeFilters}
-               handleApplyFilters={handleApplyFilters}
-               handleClearFilters={handleClearFilters}
-            />
-         </div>
+               <TaskList openModal={openModal} tasks={tasks} activeFilters={activeFilters} handleApplyFilters={handleApplyFilters} handleClearFilters={handleClearFilters} />
 
-         <TaskModal isOpen={isModalOpen} onClose={closeModal} task={editingTask} tasks={tasks} afterLeave={reset} />
-      </AppLayout>
-   );
+               <TaskModal isOpen={isModalOpen} onClose={closeModal} task={editingTask} tasks={tasks} afterLeave={reset} />
+          </AppLayout>
+     );
 }
