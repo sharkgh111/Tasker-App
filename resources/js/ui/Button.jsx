@@ -1,6 +1,16 @@
 import React from "react";
 
-export default function Button({ text, Icon, showText = true, showIcon = true, iconSize = "w-5 h-5", onClick, className, type = "button", ...props }) {
+export default function Button({
+     text,
+     Icon,
+     showText = true,
+     showIcon = true,
+     iconSize = "w-5 h-5",
+     onClick,
+     className,
+     type = "button",
+     ...props
+}) {
      return (
           <button
                type={type}

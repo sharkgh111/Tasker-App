@@ -1,8 +1,8 @@
-import InputError from "@/Components/InputError";
-import InputLabel from "@/Components/InputLabel";
-import PrimaryButton from "@/Components/PrimaryButton";
-import TextInput from "@/Components/TextInput";
-import GuestLayout from "@/Layouts/GuestLayout";
+import InputError from "@/components/TasksPageComponents/TaskModalComponents/UI/InputError";
+import InputLabel from "@/components/TasksPageComponents/TaskModalComponents/UI/InputLabel";
+import PrimaryButton from "@/components/PrimaryButton";
+import TextInput from "@/components/TextInput";
+import GuestLayout from "@/layouts/GuestLayout";
 import { Head, useForm } from "@inertiajs/react";
 
 export default function ResetPassword({ token, email }) {
@@ -29,7 +29,15 @@ export default function ResetPassword({ token, email }) {
                     <div>
                          <InputLabel htmlFor="email" value="Email" />
 
-                         <TextInput id="email" type="email" name="email" value={data.email} className="mt-1 block w-full" autoComplete="username" onChange={(e) => setData("email", e.target.value)} />
+                         <TextInput
+                              id="email"
+                              type="email"
+                              name="email"
+                              value={data.email}
+                              className="mt-1 block w-full"
+                              autoComplete="username"
+                              onChange={(e) => setData("email", e.target.value)}
+                         />
 
                          <InputError message={errors.email} className="mt-2" />
                     </div>

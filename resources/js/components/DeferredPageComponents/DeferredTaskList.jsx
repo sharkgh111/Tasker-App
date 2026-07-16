@@ -4,7 +4,7 @@ import DeferredTaskCard from "./DeferredTaskCard";
 
 import { TASK_CATEGORIES } from "@/constants/taskCategories";
 import { PRIORITY_OPTIONS } from "@/constants/priorityOptions";
-import { getTaskStatusMeta } from "@/components/TasksPageComponents/task/utils/taskStatusUtils";
+import { getTaskStatusMeta } from "@/components/TasksPageComponents/utils/taskStatusUtils";
 
 export default function DeferredTaskList({ deferredTasks = [] }) {
      const categoryLookup = new Map(TASK_CATEGORIES.map((category) => [category.name, category]));
@@ -24,5 +24,13 @@ export default function DeferredTaskList({ deferredTasks = [] }) {
           });
      };
 
-     return <DeferredTaskCard deferredTasks={deferredTasks} categoryLookup={categoryLookup} priorityLookup={priorityLookup} formatDate={formatDate} getTaskStatusMeta={getTaskStatusMeta} />;
+     return (
+          <DeferredTaskCard
+               deferredTasks={deferredTasks}
+               categoryLookup={categoryLookup}
+               priorityLookup={priorityLookup}
+               formatDate={formatDate}
+               getTaskStatusMeta={getTaskStatusMeta}
+          />
+     );
 }

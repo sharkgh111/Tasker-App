@@ -22,7 +22,11 @@ export default function Header() {
           <header className="w-full flex-shrink-0 flex justify-center h-[80px] shadow-xl bg-main_green_dark/10 backdrop-blur-xl rounded-md px-5 mb-4">
                <nav className="group flex flex-1 justify-between items-center">
                     <Link href="/home">
-                         <img src="images/tasker-2.png" alt="Tasker" className="w-40 cursor-pointer" />
+                         <img
+                              src="images/tasker-2.png"
+                              alt="Tasker"
+                              className="w-40 cursor-pointer"
+                         />
                     </Link>
 
                     <section className="w-auto h-full gap-6 flex items-center justify-around">

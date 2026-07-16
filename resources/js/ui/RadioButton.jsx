@@ -1,9 +1,23 @@
 import React from "react";
 
-export default function CustomRadio({ label, name, value, checked, onChange, defaultColor = "bg-main_green_light" }) {
+export default function CustomRadio({
+     label,
+     name,
+     value,
+     checked,
+     onChange,
+     defaultColor = "bg-main_green_light",
+}) {
      return (
           <label className="flex items-center flex-col justify-center gap-3 cursor-pointer select-none group font-montserrat-medium text-xl text-main_lightly">
-               <input type="radio" name={name} value={value} checked={checked} onChange={onChange} className="sr-only" />
+               <input
+                    type="radio"
+                    name={name}
+                    value={value}
+                    checked={checked}
+                    onChange={onChange}
+                    className="sr-only"
+               />
 
                <div
                     className={`

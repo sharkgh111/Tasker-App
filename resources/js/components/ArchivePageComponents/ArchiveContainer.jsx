@@ -56,11 +56,21 @@ export default function ArchiveContainer({ archiveTasks = [] }) {
      return (
           <div className="flex w-full h-full items-center p-5 gap-4">
                <section className="flex-1 h-full">
-                    <ArchiveSection title="Давні" tasks={longTasks} emptyMessage="Тут ще немає давніх архівних задач" borderClassName="border-l-4 border-r-2 border-main_lightly/30" />
+                    <ArchiveSection
+                         title="Давні"
+                         tasks={longTasks}
+                         emptyTitle="Тут ще немає давніх архівних задач"
+                         borderClassName="border-l-4 border-r-2 border-main_lightly/30"
+                    />
                </section>
 
                <section className="flex-1 h-full">
-                    <ArchiveSection title="Нещодавні" tasks={recentTasks} emptyMessage="Тут ще немає нещодавніх архівних задач" borderClassName="border-r-4 border-l-2 border-main_lightly/30" />
+                    <ArchiveSection
+                         title="Нещодавні"
+                         tasks={recentTasks}
+                         emptyTitle="Тут ще немає нещодавніх архівних задач"
+                         borderClassName="border-r-4 border-l-2 border-main_lightly/30"
+                    />
                </section>
           </div>
      );

@@ -1,9 +1,9 @@
-import Checkbox from "@/Components/Checkbox";
-import InputError from "@/Components/InputError";
-import InputLabel from "@/Components/InputLabel";
-import PrimaryButton from "@/Components/PrimaryButton";
-import TextInput from "@/Components/TextInput";
-import GuestLayout from "@/Layouts/GuestLayout";
+import Checkbox from "@/components/UI/Checkbox";
+import InputError from "@/components/TasksPageComponents/TaskModalComponents/UI/InputError";
+import InputLabel from "@/components/TasksPageComponents/TaskModalComponents/UI/InputLabel";
+import PrimaryButton from "@/components/PrimaryButton";
+import TextInput from "@/components/TextInput";
+import GuestLayout from "@/layouts/GuestLayout";
 import { Head, Link, useForm } from "@inertiajs/react";
 
 export default function Login({ status, canResetPassword }) {
@@ -63,7 +63,11 @@ export default function Login({ status, canResetPassword }) {
 
                     <div className="mt-4 block">
                          <label className="flex items-center">
-                              <Checkbox name="remember" checked={data.remember} onChange={(e) => setData("remember", e.target.checked)} />
+                              <Checkbox
+                                   name="remember"
+                                   checked={data.remember}
+                                   onChange={(e) => setData("remember", e.target.checked)}
+                              />
                               <span className="ms-2 text-sm text-gray-600">Remember me</span>
                          </label>
                     </div>

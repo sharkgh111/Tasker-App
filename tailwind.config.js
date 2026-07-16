@@ -34,7 +34,8 @@ export default {
                     "montserrat-bold": ["montserrat-bold", "sans-serif"],
                },
                backgroundImage: {
-                    "tasker-radial": "radial-gradient(179.1% 154.97% at -22.55% 2.9%, #343667 0%, #888FB3 42.79%, var(--main_green_light, #8B97E2) 63.46%, #343667 100%);",
+                    "tasker-radial":
+                         "radial-gradient(179.1% 154.97% at -22.55% 2.9%, #343667 0%, #888FB3 42.79%, var(--main_green_light, #8B97E2) 63.46%, #343667 100%);",
                },
                colors: {
                     main_green_light: "#8B97E2",
