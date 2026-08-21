@@ -1,8 +1,8 @@
-import Checkbox from "@/components/UI/Checkbox";
+import Checkbox from "@/ui/Checkbox";
 import InputError from "@/components/TasksPageComponents/TaskModalComponents/UI/InputError";
 import InputLabel from "@/components/TasksPageComponents/TaskModalComponents/UI/InputLabel";
-import PrimaryButton from "@/components/PrimaryButton";
-import TextInput from "@/components/TextInput";
+import PrimaryButton from "@/ui/PrimaryButton";
+import TextInput from "@/ui/TextInput";
 import GuestLayout from "@/layouts/GuestLayout";
 import { Head, Link, useForm } from "@inertiajs/react";
 

@@ -3,6 +3,8 @@ import { LuPlus, LuTrash2 } from "react-icons/lu";
 import IconButton from "@/ui/IconButton";
 import { TbSubtask } from "react-icons/tb";
 
+import EmptyState from "../../../../feedback/EmptyState";
+
 export default function SubTaskManager({
      subtasks = [],
      setData,
@@ -86,9 +88,7 @@ export default function SubTaskManager({
                )}
                {subtasks.length === 0 && !isAddingSubtask && (
                     <div className="flex flex-col items-center gap-3">
-                         <p className="text-main_lightly font-montserrat-medium text-md text-center">
-                              У цієї задачі ще немає підзадач
-                         </p>
+                         <EmptyState iconSize="w-8 h-8" title="Тут ще нема підзавдань" />
                          <Button
                               type="button"
                               text="Додати підзадачу"
@@ -106,9 +106,9 @@ export default function SubTaskManager({
                                    key={sub.id}
                                    className="flex items-center justify-between bg-main_green_dark/50 border-2 border-main_lightly p-3 rounded-xl shadow-md transition-all animate-fadeIn"
                               >
-                                   <div className="flex items-center gap-4">
+                                   <div className="flex flex-1 min-w-0 items-center gap-4">
                                         <span
-                                             className={`text-md font-montserrat-medium break-words transition-all ${sub.is_completed ? "line-through text-main_lightly/40" : "text-main_lightly"}`}
+                                             className={`text-md font-montserrat-medium whitespace-normal break-words transition-all ${sub.is_completed ? "line-through text-main_lightly/40" : "text-main_lightly"}`}
                                         >
                                              {sub.title}
                                         </span>

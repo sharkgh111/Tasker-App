@@ -2,9 +2,10 @@ import { useCallback } from "react";
 import { FiFilter } from "react-icons/fi";
 import { FiTrash2 } from "react-icons/fi";
 import { FaArrowDownUpAcrossLine } from "react-icons/fa6";
-import IconButton from "../../../ui/IconButton";
+import IconButton from "@/ui/IconButton";
 
-import FilterTask from "../UI/BaseTaskPopover";
+import FilterTaskPopover from "../../UI/FilterTaskPopover";
+import Tooltip from "@/ui/Tooltip";
 import { FILTER_TASKS_SETUP } from "@/constants/filterTaskSetup";
 import { router } from "@inertiajs/react";
 
@@ -32,18 +33,20 @@ export default function Toolbar({
 
      const toolbarItems = [
           {
-               component: FilterTask,
+               component: FilterTaskPopover,
+               text: "Фільтрувати",
                props: {
                     icon: FiFilter,
-                    type: "filter",
-                    array: FILTER_TASKS_SETUP,
-                    activeSearchMode: activeFilters,
+                    popoverClass: "",
+                    items: FILTER_TASKS_SETUP,
+                    activeFilters,
                     handleApplyFilters,
                     handleClearFilters,
                },
           },
           {
                component: IconButton,
+               text: "Розвернути список",
                props: {
                     Icon: FaArrowDownUpAcrossLine,
                     iconSize: "w-8 h-8",
@@ -52,6 +55,7 @@ export default function Toolbar({
           },
           {
                component: IconButton,
+               text: "Видалити усі завдання",
                props: {
                     Icon: FiTrash2,
                     iconSize: "w-8 h-8",
@@ -64,7 +68,11 @@ export default function Toolbar({
           <div className="flex items-center justify-center gap-3">
                {toolbarItems.map((item, index) => {
                     const Component = item.component;
-                    return <Component key={index} {...item.props} />;
+                    return (
+                         <Tooltip key={index} text={item.text}>
+                              <Component {...item.props} />
+                         </Tooltip>
+                    );
                })}
           </div>
      );

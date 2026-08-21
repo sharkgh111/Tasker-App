@@ -36,20 +36,6 @@ class TaskController extends Controller {
             ->where('is_deferred', false)
             ->get();
 
-        $currentTasks = $tasks->filter(function ($task) use ($now) {
-            if (!$task->is_planned) {
-                return true;
-            }
-            if (!$task->upload_date) {
-                return true;
-            }
-            return Carbon::parse($task->upload_date)->lte($now);
-        })->values();
-
-        $plannedTasks = $tasks->filter(function ($task) use ($now) {
-            return $task->is_planned && $task->upload_date && Carbon::parse($task->upload_date)->gt($now);
-        })->values();
-
         return Inertia::render('TasksPage', [
             'tasks' => $tasks
         ]);
@@ -154,7 +140,7 @@ class TaskController extends Controller {
     public function update(Request $request, Task $task) {
         $validated = $request->validate([
             'title' => 'sometimes|required|string|max:255',
-            'description' => 'sometimes|required|string',
+            'description' => 'sometimes|nullable|string',
             'task_date' => 'sometimes|required|date',
             'is_planned' => 'sometimes|required|boolean',
             'is_completed' => 'sometimes|boolean',
@@ -164,11 +150,11 @@ class TaskController extends Controller {
             'can_edit' => 'nullable|boolean',
             'can_archive' => 'nullable|boolean',
             'has_reminder' => 'nullable|boolean',
-            'categories' => 'nullable', 
+            'categories' => 'nullable|array',
             'subtasks' => 'nullable|array',
         ]);
 
-        $task->update($request->except('subtasks'));
+        $task->update(collect($validated)->except('subtasks')->all());
 
         if ($request->has('is_completed')) {
             $task->subtasks()->update([
@@ -195,6 +181,37 @@ class TaskController extends Controller {
         Task::query()->update([
             'is_archived' => true,
         ]);
+
+        return redirect()->back();
+    }
+
+    public function destroyArchived(Request $request)
+    {
+        $group = $request->input('group');
+        $now = Carbon::now();
+        $threshold = $now->copy()->subDays(14);
+
+        if ($group === 'long') {
+            Task::where('is_archived', true)
+                ->whereNotNull('task_date')
+                ->where('task_date', '<', $threshold)
+                ->delete();
+
+            return redirect()->back();
+        }
+
+        if ($group === 'recent') {
+            Task::where('is_archived', true)
+                ->where(function ($query) use ($threshold) {
+                    $query->whereNull('task_date')
+                        ->orWhere('task_date', '>=', $threshold);
+                })
+                ->delete();
+
+            return redirect()->back();
+        }
+
+        Task::where('is_archived', true)->delete();
 
         return redirect()->back();
     }

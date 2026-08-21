@@ -11,7 +11,7 @@ export default function Footer() {
 
      return (
           <>
-               <footer className="w-full flex-shrink-0 overflow-hidden flex justify-center h-[80px] shadow-xl bg-main_green_dark/10 backdrop-blur-xl rounded-md px-5 mt-4">
+               <footer className="w-full flex-shrink-0 overflow-hidden flex justify-center h-[100px] shadow-xl border-t-4 border-main_lightly/50 bg-main_green_dark/40 backdrop-blur-xl px-5 mt-4">
                     <div className="flex flex-1 justify-between items-center relative">
                          <div className="flex flex-col items-start gap-1">
                               {footerSocial.map(({ title, Icon, href }) => (

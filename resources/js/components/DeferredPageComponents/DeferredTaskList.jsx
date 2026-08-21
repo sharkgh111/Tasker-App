@@ -4,7 +4,7 @@ import DeferredTaskCard from "./DeferredTaskCard";
 
 import { TASK_CATEGORIES } from "@/constants/taskCategories";
 import { PRIORITY_OPTIONS } from "@/constants/priorityOptions";
-import { getTaskStatusMeta } from "@/components/TasksPageComponents/utils/taskStatusUtils";
+import { getTaskStatusMeta } from "@/components/TasksPageComponents/Utils/taskStatusUtils";
 
 export default function DeferredTaskList({ deferredTasks = [] }) {
      const categoryLookup = new Map(TASK_CATEGORIES.map((category) => [category.name, category]));

@@ -1,6 +1,6 @@
-import React from "react";
+import React, { useState } from "react";
 
-import TaskToolbar from "../FilterTaskComponents/TaskToolbar";
+import TaskToolbar from "./Components/TaskToolbar";
 import Button from "@/ui/Button";
 import Task from "@/components/TasksPageComponents/TaskCardComponents/TaskCard";
 import EmptyState from "../../../feedback/EmptyState";
@@ -14,13 +14,11 @@ import SearchInputSection from "./Components/SearchInputSection";
 export default function CurrentTaskList({
      tasks,
      activeSearchMode,
-     isReverseList,
      handleSearchModeChange,
      handleApplyFilters,
      completedTasksCount,
      totalTasksCount,
-     visibleCurrentTasks,
-     setReverseList,
+     visibleCurrentTasks = [],
      handleClearFilters,
      openPlanned,
      searchQuery,
@@ -29,6 +27,8 @@ export default function CurrentTaskList({
      openModal,
      activeFilters,
 }) {
+     const [isReverseList, setReverseList] = useState(false);
+
      return (
           <section className="w-full flex-1 gap-2 h-full flex flex-col items-center rounded-lg min-h-0">
                <header className="px-10 w-full flex items-center justify-between gap-2 py-2 flex-shrink-0 border-b-4 border-main_lightly/20">
@@ -44,7 +44,6 @@ export default function CurrentTaskList({
                          SEARCH_QUERY_SETTING={SEARCH_QUERY_SETTING}
                          handleSearchModeChange={handleSearchModeChange}
                          activeSearchMode={activeSearchMode}
-                         handleSearchModeChange={handleSearchModeChange}
                     />
                     <TaskToolbar
                          tasks={tasks}

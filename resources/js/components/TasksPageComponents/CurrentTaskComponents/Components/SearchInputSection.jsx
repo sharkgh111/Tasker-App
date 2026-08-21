@@ -1,6 +1,6 @@
 import React from "react";
 
-import TaskPopover from "../../UI/BaseTaskPopover";
+import SearchTaskPopover from "../../UI/SearchTaskPopover";
 
 import { IoSettingsOutline } from "react-icons/io5";
 
@@ -13,7 +13,7 @@ export default function SearchInputSection({
      handleSearchModeChange,
 }) {
      return (
-          <div className="flex-1 mx-10 relative">
+          <div className="relative flex-1 mx-10">
                <input
                     type="text"
                     value={searchQuery}
@@ -25,11 +25,10 @@ export default function SearchInputSection({
                             "
                     placeholder={searchPlaceholder}
                />
-               <TaskPopover
+               <SearchTaskPopover
                     icon={IoSettingsOutline}
-                    type="search"
-                    popoverClass="absolute top-[8px] right-2"
-                    array={SEARCH_QUERY_SETTING}
+                    popoverClass="absolute right-3 top-7 -translate-y-1/2"
+                    items={SEARCH_QUERY_SETTING}
                     activeSearchMode={activeSearchMode}
                     handleSearchModeChange={handleSearchModeChange}
                />

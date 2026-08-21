@@ -30,7 +30,6 @@ export default function TaskModal({ isOpen, onClose, task = null, tasks = [], af
      } = useTaskForm({ isOpen, task, tasks });
 
      const isActionForbidden = task && data.is_planned !== !!task.is_planned;
-     const isTaskLocked = task && data.is_planned !== !!task.is_planned;
 
      const overallWidth = "450px";
 
@@ -73,7 +72,7 @@ export default function TaskModal({ isOpen, onClose, task = null, tasks = [], af
                                    <div className="flex flex-col flex-grow min-h-0">
                                         <form
                                              id="task-create-form"
-                                             onSubmit={handleSubmit}
+                                             onSubmit={(event) => handleSubmit(event, onClose)}
                                              className="flex flex-row flex-grow min-h-0 border-b-[3px] border-main_lightly/30"
                                         >
                                              <TaskManager
@@ -133,12 +132,9 @@ export default function TaskModal({ isOpen, onClose, task = null, tasks = [], af
                                                             form="task-create-form"
                                                             Icon={MdOutlineCreate}
                                                             iconSize="w-7 h-7"
-                                                            onClick={(event) =>
-                                                                 handleSubmit(event, onClose)
-                                                            }
                                                             disabled={isActionForbidden}
                                                             text={task ? "Зберегти" : "Створити"}
-                                                            className={`${isTaskLocked ? "bg-gray-500 cursor-not-allowed" : "bg-main_green_dark"} border-2 bg-main_green_dark hover:bg-main_green_dark/80 font-montserrat-medium px-[50px] py-[5px] text-2xl`}
+                                                            className={`${isActionForbidden ? "bg-gray-500 cursor-not-allowed" : "bg-main_green_dark"} border-2 hover:bg-main_green_dark/80 font-montserrat-medium px-[50px] py-[5px] text-2xl`}
                                                        />
                                                   </div>
                                              </div>

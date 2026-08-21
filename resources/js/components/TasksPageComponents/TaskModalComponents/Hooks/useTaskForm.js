@@ -155,17 +155,21 @@ export function useTaskForm({ isOpen, task, tasks = [] }) {
                return;
           }
 
+          const handleSuccess = () => {
+               if (typeof onClose === "function") {
+                    onClose();
+               }
+          };
+
           if (task && task.id) {
                patch(`/tasks/${task.id}`, {
-                    onSuccess: () => {
-                         onClose();
-                    },
+                    onSuccess: handleSuccess,
                });
           } else {
                post("/tasks", {
                     onSuccess: () => {
                          clearFormState();
-                         onClose();
+                         handleSuccess();
                     },
                });
           }

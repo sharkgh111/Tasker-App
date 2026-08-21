@@ -36,3 +36,5 @@ Route::get('/archive', function (Request $request) {
         'archiveTasks' => $archiveTasks,
     ]);
 })->name('archive');
+
+Route::delete('/archive', [TaskController::class, 'destroyArchived'])->name('archive.destroy');

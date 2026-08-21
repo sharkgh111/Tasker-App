@@ -1,7 +1,6 @@
 import defaultTheme from "tailwindcss/defaultTheme";
 import forms from "@tailwindcss/forms";
 
-/** @type {import('tailwindcss').Config} */
 export default {
      content: [
           "./vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php",
@@ -16,11 +15,15 @@ export default {
           "bg-warning_light",
           "bg-orange-500",
           "bg-danger_light",
+          "bg-main_lightly",
+          "bg-main_lightily",
           "text-main_lightly",
+          "text-main_lightily",
           "text-succes_light",
           "text-warning_light",
           "text-danger_light",
           "border-main_lightly",
+          "border-main_lightily",
           "border-succes_light",
           "border-warning_light",
           "border-danger_light",
@@ -33,17 +36,14 @@ export default {
                     "montserrat-regular": ["montserrat-regular", "sans-serif"],
                     "montserrat-bold": ["montserrat-bold", "sans-serif"],
                },
-               backgroundImage: {
-                    "tasker-radial":
-                         "radial-gradient(179.1% 154.97% at -22.55% 2.9%, #343667 0%, #888FB3 42.79%, var(--main_green_light, #8B97E2) 63.46%, #343667 100%);",
-               },
                colors: {
-                    main_green_light: "#8B97E2",
-                    main_green_dark: "#343667",
-                    main_green_primary: "#6F83AE",
+                    main_green_light: "#C5D5E4",
+                    main_green_dark: "#14080E",
+                    main_green_primary: "#49475B",
                     danger_light: "#C7424F",
                     warning_light: "#e39f32",
-                    main_lightly: "#E5EFFF",
+                    main_lightly: "#F1FFFA",
+                    main_lightily_alt: "#F1FFFA",
                     succes_light: "#87E747",
                },
           },

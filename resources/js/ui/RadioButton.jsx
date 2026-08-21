@@ -6,8 +6,12 @@ export default function CustomRadio({
      value,
      checked,
      onChange,
-     defaultColor = "bg-main_green_light",
+     defaultColor = "main_green_light",
 }) {
+     const normalizedColorClass = defaultColor.startsWith("bg-")
+          ? defaultColor
+          : `bg-${defaultColor}`;
+
      return (
           <label className="flex items-center flex-col justify-center gap-3 cursor-pointer select-none group font-montserrat-medium text-xl text-main_lightly">
                <input
@@ -21,7 +25,7 @@ export default function CustomRadio({
 
                <div
                     className={`
-                    w-7 h-7 flex rounded-full items-center justify-center border-2 transition-all duration-200 border-main_lightly bg-${defaultColor}
+                    w-7 h-7 flex rounded-full items-center justify-center border-2 transition-all duration-200 border-main_lightly ${normalizedColorClass}
                     ${checked ? "scale-110 shadow-xl ring-2 ring-main_lightly/30" : "group-hover:border-main_lightly/60 shadow-lg group-hover:scale-95"}
                 `}
                >

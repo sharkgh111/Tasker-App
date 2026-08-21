@@ -1,7 +1,7 @@
 import React from "react";
 
 import { TASK_CATEGORIES } from "@/constants/taskCategories";
-import { getTaskStatusMeta } from "@/components/TasksPageComponents/utils/taskStatusUtils";
+import { getTaskStatusMeta } from "@/components/TasksPageComponents/Utils/taskStatusUtils";
 import ArchiveTaskInfoSection from "./Components/ArchiveTaskInfoSection";
 import ArchiveTaskContent from "./Components/ArchiveTaskContent";
 import ArchiveTaskToolbar from "./Components/ArchiveTaskToolbar";

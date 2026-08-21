@@ -1,5 +1,18 @@
 import React from "react";
 
+import TaskCardHeader from "@/components/TasksPageComponents/TaskCardComponents/Components/TaskCardHeader";
+import TaskCategories from "../../TasksPageComponents/TaskCardComponents/Components/TaskCategories";
+
+const PRIORITY_BG_CLASSES = {
+     main_green_light: "bg-main_green_light",
+     succes_light: "bg-succes_light",
+     warning_light: "bg-warning_light",
+     "orange-500": "bg-orange-500",
+     danger_light: "bg-danger_light",
+};
+
+const getPriorityBgClass = (color) => PRIORITY_BG_CLASSES[color] || "bg-main_green_light";
+
 export default function DeferredTaskInfoSection({
      task,
      taskStatus,
@@ -8,50 +21,31 @@ export default function DeferredTaskInfoSection({
      formatDate,
 }) {
      return (
-          <div className="flex items-center justify-between p-4 border-b-4 border-main_lightly/30">
-               <div className="flex flex-col items-start justify-center">
-                    <h3 className="text-3xl font-montserrat-medium text-main_lightly">
-                         {task.title || "Нова задача"}
-                    </h3>
-                    <p className="text-md font-montserrat-medium text-main_lightly/50">
-                         {formatDate(task.task_date)}
-                    </p>
-               </div>
-
-               <div className="flex gap-5 p-2 flex-col-reverse">
-                    <div className="flex items-center justify-end gap-3 w-full">
-                         <span
-                              className={`text-[12px] uppercase tracking-wider font-montserrat-bold px-2 py-0.5 border-2 rounded-md whitespace-nowrap ${taskStatus.color}`}
-                         >
-                              {taskStatus.text}
-                         </span>
-                         {currentPriority && (
+          <TaskCardHeader
+               task={task}
+               formatDate={formatDate}
+               titleClassName="text-3xl font-montserrat-medium text-main_lightly"
+               subtitleClassName="text-md font-montserrat-medium text-main_lightly/50"
+               renderMeta={(currentTask) => (
+                    <div className="flex gap-5 p-2 flex-col-reverse">
+                         <div className="flex items-center justify-end gap-3 w-full">
                               <span
-                                   className={`h-5 w-5 content-center rounded-full border-2 border-main_lightly bg-${currentPriority.color}`}
-                              />
+                                   className={`text-[12px] uppercase tracking-wider font-montserrat-bold px-2 py-0.5 border-2 rounded-md whitespace-nowrap ${taskStatus.color}`}
+                              >
+                                   {taskStatus.text}
+                              </span>
+                              {currentPriority && (
+                                   <span
+                                        className={`h-5 w-5 content-center rounded-full border-2 border-main_lightly ${getPriorityBgClass(currentPriority.color)}`}
+                                   />
+                              )}
+                         </div>
+
+                         {currentTask.categories && currentTask.categories.length > 0 && (
+                              <TaskCategories task={currentTask} categoryLookup={categoryLookup} />
                          )}
                     </div>
-
-                    {task.categories && task.categories.length > 0 && (
-                         <div className="flex flex-wrap items-center justify-end gap-1">
-                              {task.categories.map((categoryName, idx) => {
-                                   const originalCategory = categoryLookup.get(categoryName);
-
-                                   return (
-                                        <span
-                                             key={`${task.id}-${idx}`}
-                                             className="flex items-center gap-1 px-2 py-0.5 text-xs font-montserrat-medium bg-main_green_primary/40 border border-main_lightly/10 text-main_lightly/90 rounded-md select-none whitespace-nowrap"
-                                        >
-                                             {originalCategory && (
-                                                  <span>{originalCategory.emoji}</span>
-                                             )}
-                                             <span>{categoryName}</span>
-                                        </span>
-                                   );
-                              })}
-                         </div>
-                    )}
-               </div>
-          </div>
+               )}
+          />
      );
 }

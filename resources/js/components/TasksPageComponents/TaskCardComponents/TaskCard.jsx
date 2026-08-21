@@ -1,10 +1,8 @@
-import React, { useEffect, useMemo, useRef } from "react";
+import React, { useMemo } from "react";
 import { LuPlus } from "react-icons/lu";
 
-import { router } from "@inertiajs/react";
-
 import Button from "@/ui/Button";
-import SubTaskList from "../SubtaskComponents/SubTaskList";
+import SubTaskList from "./Components/SubTaskList";
 import InfoSection from "./Components/TaskCardInfoSection";
 import TaskToolbar from "./Components/TaskCardToolbar";
 
@@ -25,39 +23,6 @@ export default function Task({ openPlanned, tasks, isReverseList, openModal, isP
           () => new Map(TASK_CATEGORIES.map((category) => [category.name, category])),
           [],
      );
-     const archivedTaskIds = useRef(new Set());
-
-     useEffect(() => {
-          if (isPlanned || !Array.isArray(tasks)) {
-               return;
-          }
-
-          tasks.forEach((task) => {
-               const taskStatus = getTaskStatusMeta(task.is_completed, task.task_date);
-
-               if (task.is_completed || task.is_archived || taskStatus.text !== "Протерміновано") {
-                    return;
-               }
-
-               if (archivedTaskIds.current.has(task.id)) {
-                    return;
-               }
-
-               archivedTaskIds.current.add(task.id);
-
-               router.patch(
-                    `/tasks/${task.id}`,
-                    {
-                         is_archived: true,
-                    },
-                    {
-                         preserveScroll: true,
-                         preserveState: true,
-                         only: ["tasks"],
-                    },
-               );
-          });
-     }, [isPlanned, tasks]);
 
      if (!Array.isArray(tasks) || tasks.length === 0) {
           return null;
